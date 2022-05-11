@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="vi">
+<head th:replace="head.html :: head('Thông tin vay lãi | N4Bank')"></head>
+<body>
+<div th:replace="header.html :: header"></div>
+
+<style>
+    .img-identity {
+            max-width: 120px;
+            aspect-ratio: 1 / 0.8;
+            cursor: pointer;
+        }
+
+        .identity-text {
+            max-width: 100px;
+            min-width: 100px;
+        }
+
+        #modalShowImg img {
+            max-width: 100%;
+        }
+
+
+
+
+
+</style>
+
+<!--Nội dung-->
+<div class="container mt-4" id="body">
+    <div class="d-flex justify-content-between sticky-top py-3 bg-light">
+        <h2 class="fs-4 fw-bold">Thông tin vay lãi</h2>
+        <div>
+            <a th:if="${registerLoan.status == 1 || registerLoan.status == 2}" class="btn btn-warning"
+               th:href="${registerLoanEdit}">Cập nhật</a>
+            <a th:if="${registerLoan.status==2 && currentUser.role == 2}" th:href="${registerLoanApproveUrl}"
+               class="btn btn-success">Phê duyệt</a>
+            <a th:if="${registerLoan.status==3 && currentUser.role == 3}" th:href="${registerLoanDisbursementUrl}"
+               class="btn btn-success">Giải ngân</a>
+            <a th:if="${registerLoan.status == 4}" th:href="${loanMoneyUrl}" class="btn btn-success ms-2">Thông tin tiền
+                lãi</a>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body d-flex">
+            <div class="me-2">Trạng thái:</div>
+            <div th:utext="${registerLoan.statusHtml}"></div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="card-title fw-bold mb-3 bg-primary text-white p-3">Thông tin khách hàng</div>
+            <table class="table align-middle table-hover">
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Họ và tên</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.fullName}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Giới tính</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.genderStr}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Ngày sinh</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.dateOfBirthFormat}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Địa chỉ</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.address}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Số điện thoại</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.phoneNumber}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Email</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.email}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Số CMND/CCCD</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.identityNumber}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Ngày cấp</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.identityDateFormat}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Nơi cấp</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.identityAddress}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Ảnh CMND/CCCD</div>
+                    </td>
+                    <td>
+                        <div>
+                            <div class="d-flex mb-3">
+                                <div>Mặt trước</div>
+                                <div>
+                                    <img class="img-identity ms-2" th:if="${!registerLoan.identityFront.isEmpty()}"
+                                         th:src="@{/files(fileName=${registerLoan.identityFront})}" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex mb-3">
+                                <div>Mặt trước</div>
+                                <div>
+                                    <img class="img-identity ms-2" th:if="${!registerLoan.identityBack.isEmpty()}"
+                                         th:src="@{/files(fileName=${registerLoan.identityBack})}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="card-title fw-bold mb-3 bg-primary text-white p-3">Thông tin khách hàng</div>
+            <table class="table align-middle table-hover">
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="fw-bold">
+                            Loại giấy tờ
+                        </div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.paperTypeStr}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">
+                            Ảnh giấy tờ
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <img th:if="${registerLoan.paperImg != null && !registerLoan.paperImg.isEmpty()}"
+                                 class="img-identity" th:src="@{/files(fileName=${registerLoan.paperImg})}" alt="">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="card-title fw-bold mb-3 bg-primary text-white p-3">Thông tin vay lãi</div>
+            <table class="table align-middle table-hover">
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Số tiền</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.amountWithFormat}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Kỳ hạn</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.cycleStr}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fw-bold">Lãi suất</div>
+                    </td>
+                    <td>
+                        <div th:text="${registerLoan.interestRateStr}"></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="modalShowImg" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer.html :: footer"></div>
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="/js/bootstrap.min.js"></script>
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+-->
+
+<script>
+    var imgModal = document.querySelector("#modalShowImg img");
+        var modalShowImg = new bootstrap.Modal(document.querySelector("#modalShowImg"));
+        var identityImgs = document.querySelectorAll(".img-identity");
+        for (let i = 0; i < identityImgs.length; i++) {
+            identityImgs[i].addEventListener("click", function (e) {
+                let srcImg = e.target.getAttribute("src"),
+                    altImg = e.target.getAttribute("alt");
+                imgModal.src = srcImg;
+                imgModal.setAttribute("alt", altImg);
+                modalShowImg.show();
+            });
+        }
+
+
+
+
+</script>
+</body>
+</html>

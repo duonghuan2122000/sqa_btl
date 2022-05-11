@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi">
+<head th:replace="head.html :: head('N4Bank')"></head>
+<body>
+<div th:replace="header.html :: header"></div>
+
+<!--Nội dung-->
+<div class="container mt-4" id="body">
+    <div class="col-sm-4 offset-sm-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+                <h2 class="fs-4 fw-bold">Đăng nhập</h2>
+                <hr>
+                <form action="" method="post" th:action="@{/login(next=${nextUrl})}" th:object="${loginForm}">
+                    <div class="mb-3">
+                        <label for="username">Tên đăng nhập</label>
+                        <input type="text" id="username" placeholder="Nhập tên đăng nhập" class="form-control" th:classappend="${#fields.hasErrors('username')} ? is-invalid : ''" th:field="*{username}" autofocus>
+                        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback">Email Error</span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" id="password" placeholder="Nhập mật khẩu" class="form-control" th:classappend="${#fields.hasErrors('password')} ? is-invalid : ''" th:field="*{password}">
+                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback">Password Error</span>
+                    </div>
+                    <button class="btn btn-primary">Đăng nhập</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer.html :: footer"></div>
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="/js/bootstrap.min.js"></script>
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+-->
+</body>
+</html>

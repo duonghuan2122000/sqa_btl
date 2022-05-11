@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  n4bannk:
+    image: 01686120288/sqa_bank:1.0.4
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - "./uploads:/app/classes/static/uploads"
+      - "./application.properties:/app/classes/application.properties"
+    ports:
+      - 5011:8080

@@ -1,0 +1,7 @@
+#body {
+    margin-bottom: 7em;
+}
+
+nav.navbar {
+    z-index: 1021;
+}
