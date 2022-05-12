@@ -60,7 +60,7 @@ public class UserDAOImpl implements UserDAO{
                 @Override
                 public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                     User user = new User();
-                    user.setId(UUID.fromString(rs.getString("Id")));
+                    user.setId(userId);
                     user.setUsername(rs.getString("Username"));
                     user.setPassword(rs.getString("Password"));
                     user.setRole(rs.getInt("Role"));

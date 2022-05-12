@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   n4bannk:
-    image: 01686120288/sqa_bank:1.0.4
+    image: 01686120288/sqa_bank:1.0.5
     build:
       context: .
       dockerfile: ./Dockerfile

@@ -36,6 +36,7 @@ public class RegisterLoanDAOImpl implements RegisterLoanDAO{
             @Override
             public RegisterLoan mapRow(ResultSet rs, int rowNum) throws SQLException {
                 RegisterLoan registerLoan = new RegisterLoan();
+                logger.info(rs.getString("Id"));
                 registerLoan.setId(UUID.fromString(rs.getString("Id")));
                 registerLoan.setFirstName(rs.getString("FirstName"));
                 registerLoan.setLastName(rs.getString("LastName"));
@@ -76,7 +77,7 @@ public class RegisterLoanDAOImpl implements RegisterLoanDAO{
                 @Override
                 public RegisterLoan mapRow(ResultSet rs, int rowNum) throws SQLException {
                     RegisterLoan registerLoan = new RegisterLoan();
-                    registerLoan.setId(UUID.fromString(rs.getString("Id")));
+                    registerLoan.setId(loanId);
                     registerLoan.setFirstName(rs.getString("FirstName"));
                     registerLoan.setLastName(rs.getString("LastName"));
                     registerLoan.setIdentityNumber(rs.getString("IdentityNumber"));
